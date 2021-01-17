@@ -1,15 +1,16 @@
 # monitoring-sandbox
 
-Sandbox environment with
+Sandbox environment with:
 
-* Prometheus
-* Node services with PM2
+- Prometheus
+- node_exporter
+- Grafana
+- Node services with PM2 (emulating a non-container setup)
 
 TODO:
 
-* node_exporter
-* Grafana
-* MongoDB
+- MongoDB
+-
 
 ## Usage
 
@@ -20,4 +21,7 @@ docker-compose build
 docker-compose up
 ```
 
-Open Prometheus at http://localhost:9090/
+Open:
+
+- Prometheus on http://localhost:9090/
+- Grafana on http://localhost:3000/ (creds admin/admin)
