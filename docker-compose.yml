@@ -1,6 +1,9 @@
 version: "3.9"
+
 volumes:
   "grafana-storage":
+  "elastic-data-01":
+
 services:
   web:
     build:
@@ -9,10 +12,12 @@ services:
     ports:
       - "3030:3030"
       - "9209:9209"
+
   mongo:
     image: "mongo"
     ports:
       - 27017:27017
+
   mongo-exporter:
     image: "bitnami/mongodb-exporter"
     environment:
@@ -20,16 +25,35 @@ services:
     ports:
       - "9216:9216"
 
+  es01:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.10.2"
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - elastic-data-01:/usr/share/elasticsearch/data
+
+  elasticsearch-exporter:
+    image: justwatch/elasticsearch_exporter:1.1.0
+    command:
+      - "--es.uri=http://es01:9200"
+    restart: always
+    ports:
+      - "9114:9114"
+
   prometheus:
     image: "prom/prometheus"
     ports:
       - "9090:9090"
     volumes:
       - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+
   node-exporter:
     image: "prom/node-exporter"
     ports:
       - "9100:9100"
+
   grafana:
     image: "grafana/grafana"
     environment:
