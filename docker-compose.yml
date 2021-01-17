@@ -1,11 +1,13 @@
 version: "3.9"
+volumes:
+  "grafana-storage":
 services:
   web:
     build:
       context: "node-services"
       dockerfile: "Dockerfile"
     ports:
-      - "3000:3000"
+      - "3030:3030"
       - "9209:9209"
   prometheus:
     image: "prom/prometheus"
@@ -17,3 +19,12 @@ services:
     image: "prom/node-exporter"
     ports:
       - "9100:9100"
+  grafana:
+    image: "grafana/grafana"
+    volumes:
+      - "grafana-storage:/var/lib/grafana"
+      - "./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
+      - "./grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml"
+      - "./grafana/dashboards:/var/lib/grafana/dashboards"
+    ports:
+      - "3000:3000"
