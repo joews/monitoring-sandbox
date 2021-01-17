@@ -6,11 +6,7 @@ Sandbox environment with:
 - node_exporter
 - Grafana
 - Node services with PM2 (emulating a non-container setup)
-
-TODO:
-
 - MongoDB
--
 
 ## Usage
 

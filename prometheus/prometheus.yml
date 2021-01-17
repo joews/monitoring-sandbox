@@ -39,3 +39,12 @@ scrape_configs:
     static_configs:
       - targets:
           - web:9209
+
+  - job_name: mongodb
+    scrape_interval: 10s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets:
+          - mongo-exporter:9216
